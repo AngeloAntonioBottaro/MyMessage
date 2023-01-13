@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{4C2D7391-B20E-4EA3-9EC8-9CD5BBF411B7}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="pkMyMsg.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demo\MyMsgDemo.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="pkMyMsg">
+        <MSBuild Projects="pkMyMsg.dproj"/>
+    </Target>
+    <Target Name="pkMyMsg:Clean">
+        <MSBuild Projects="pkMyMsg.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="pkMyMsg:Make">
+        <MSBuild Projects="pkMyMsg.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MyMsgDemo">
+        <MSBuild Projects="Demo\MyMsgDemo.dproj"/>
+    </Target>
+    <Target Name="MyMsgDemo:Clean">
+        <MSBuild Projects="Demo\MyMsgDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MyMsgDemo:Make">
+        <MSBuild Projects="Demo\MyMsgDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="pkMyMsg;MyMsgDemo"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="pkMyMsg:Clean;MyMsgDemo:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="pkMyMsg:Make;MyMsgDemo:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
