@@ -27,22 +27,22 @@ type
 
     function ShowMensagem: Boolean;
   protected
-    function Title(aValue: string): IMyMessage; overload;
+    function Title(AValue: string): IMyMessage; overload;
     function Title: string; overload;
-    function Mensagem(aValue: string): IMyMessage; overload;
+    function Mensagem(AValue: string): IMyMessage; overload;
     function Mensagem: string; overload;
-    function MensagemCompleta(aValue: string): IMyMessage; overload;
+    function MensagemCompleta(AValue: string): IMyMessage; overload;
     function MensagemCompleta: string; overload;
     function FocoSim: IMyMessage;
     function FocoNao: IMyMessage;
-    function Componente(aValue: TWinControl): IMyMessage;
+    function Componente(AValue: TWinControl): IMyMessage;
 
-    function MensagemOpcao1(aValue: string): IMyMessage; overload;
-    function MensagemOpcao1: string; overload;
-    function MensagemOpcao2(aValue: string): IMyMessage; overload;
-    function MensagemOpcao2: string; overload;
-    function MensagemOpcao3(aValue: string): IMyMessage; overload;
-    function MensagemOpcao3: string; overload;
+    function Opcao1(AValue: string): IMyMessage; overload;
+    function Opcao1: string; overload;
+    function Opcao2(AValue: string): IMyMessage; overload;
+    function Opcao2: string; overload;
+    function Opcao3(AValue: string): IMyMessage; overload;
+    function Opcao3: string; overload;
 
     function MsgInformacao: Boolean;
     function MsgAlert: Boolean;
@@ -57,12 +57,22 @@ type
   end;
 {$ENDREGION 'TMyMessage'}
 
-function showInformacao(AMsg: string): Boolean;
-function showAlert(AMsg: string): Boolean;
-function showErro(AMsg: string): Boolean;
-function showCampoObrigatorio(AMsg: string): Boolean;
-function showPerguntaS(AMsg: string): Boolean;
-function showPerguntaN(AMsg: string): Boolean;
+{$REGION 'ShowMessage'}
+function ShowInformacao(AMessage: string): Boolean; overload;
+function ShowInformacao(AMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowAlert(AMessage: string): Boolean; overload;
+function ShowAlert(AMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowErro(AMessage: string): Boolean; overload;
+function ShowErro(AMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowCampoObrigatorio(AMessage: string): Boolean; overload;
+function ShowCampoObrigatorio(AMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowPerguntaS(AMessage: string): Boolean; overload;
+function ShowPerguntaS(AMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowPerguntaN(AMessage: string): Boolean; overload;
+function ShowPerguntaN(AMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowOpcao(AMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
+function ShowOpcao(AMessage, AMsgCompleta, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
+{$ENDREGION 'ShowMessage'}
 
 implementation
 
@@ -97,10 +107,10 @@ begin
    inherited;
 end;
 
-function TMyMessage.Title(aValue: string): IMyMessage;
+function TMyMessage.Title(AValue: string): IMyMessage;
 begin
    Result := Self;
-   FTitle := Trim(aValue);
+   FTitle := AValue.Trim;
 end;
 
 function TMyMessage.Title: string;
@@ -111,10 +121,10 @@ begin
    Result := FTitle;
 end;
 
-function TMyMessage.Mensagem(aValue: string): IMyMessage;
+function TMyMessage.Mensagem(AValue: string): IMyMessage;
 begin
    Result    := Self;
-   FMensagem := Trim(aValue);
+   FMensagem := AValue.Trim;
 end;
 
 function TMyMessage.Mensagem: string;
@@ -122,49 +132,49 @@ begin
    Result := FMensagem;
 end;
 
-function TMyMessage.MensagemCompleta(aValue: string): IMyMessage;
+function TMyMessage.MensagemCompleta(AValue: string): IMyMessage;
 begin
    Result            := Self;
-   FMensagemCompleta := Trim(aValue);
+   FMensagemCompleta := AValue.Trim;
 end;
 
 function TMyMessage.MensagemCompleta: string;
 begin
    if(FMensagemCompleta = EmptyStr)then
-      MensagemCompleta(Mensagem);
+     Self.MensagemCompleta(Self.Mensagem);
 
    Result := FMensagemCompleta;
 end;
 
-function TMyMessage.MensagemOpcao1(aValue: string): IMyMessage;
+function TMyMessage.Opcao1(AValue: string): IMyMessage;
 begin
    Result     := Self;
-   FMsgOpcao1 := Trim(aValue);
+   FMsgOpcao1 := AValue.Trim;
 end;
 
-function TMyMessage.MensagemOpcao1: string;
+function TMyMessage.Opcao1: string;
 begin
    Result := FMsgOpcao1;
 end;
 
-function TMyMessage.MensagemOpcao2(aValue: string): IMyMessage;
+function TMyMessage.Opcao2(AValue: string): IMyMessage;
 begin
    Result     := Self;
-   FMsgOpcao2 := Trim(aValue);
+   FMsgOpcao2 := AValue.Trim;
 end;
 
-function TMyMessage.MensagemOpcao2: string;
+function TMyMessage.Opcao2: string;
 begin
    Result := FMsgOpcao2;
 end;
 
-function TMyMessage.MensagemOpcao3(aValue: string): IMyMessage;
+function TMyMessage.Opcao3(AValue: string): IMyMessage;
 begin
    Result     := Self;
-   FMsgOpcao3 := Trim(aValue);
+   FMsgOpcao3 := AValue.Trim;
 end;
 
-function TMyMessage.MensagemOpcao3: string;
+function TMyMessage.Opcao3: string;
 begin
    Result := FMsgOpcao3;
 end;
@@ -181,10 +191,10 @@ begin
    FFoco  := TFoco.FocoBotaoNao;
 end;
 
-function TMyMessage.Componente(aValue: TWinControl): IMyMessage;
+function TMyMessage.Componente(AValue: TWinControl): IMyMessage;
 begin
    Result     := Self;
-   FComponent := aValue;
+   FComponent := AValue;
 end;
 
 function TMyMessage.MsgInformacao: Boolean;
@@ -240,12 +250,15 @@ begin
     MyMessageView.ImageListIcon.GetBitmap(Integer(FMsgtype), MyMessageView.imgIcon.Picture.Bitmap);
 
     //BOTOES
-    MyMessageView.ButtonOpcao1.Visible := (FMsgtype = TMsgType.MsgOpcao)and(MensagemOpcao1 <> EmptyStr);
-    MyMessageView.ButtonOpcao1.Caption := MensagemOpcao1;
-    MyMessageView.ButtonOpcao2.Visible := (FMsgtype = TMsgType.MsgOpcao)and(MensagemOpcao2 <> EmptyStr);
-    MyMessageView.ButtonOpcao2.Caption := MensagemOpcao2;
-    MyMessageView.ButtonOpcao3.Visible := (FMsgtype = TMsgType.MsgOpcao)and(MensagemOpcao3 <> EmptyStr);
-    MyMessageView.ButtonOpcao3.Caption := MensagemOpcao3;
+    if(FMsgtype = TMsgType.MsgOpcao)then
+    begin
+       MyMessageView.ButtonOpcao1.Visible := (Self.Opcao1 <> EmptyStr);
+       MyMessageView.ButtonOpcao1.Caption := Self.Opcao1;
+       MyMessageView.ButtonOpcao2.Visible := (Self.Opcao2 <> EmptyStr);
+       MyMessageView.ButtonOpcao2.Caption := Self.Opcao2;
+       MyMessageView.ButtonOpcao3.Visible := (Self.Opcao3 <> EmptyStr);
+       MyMessageView.ButtonOpcao3.Caption := Self.Opcao3;
+    end;
 
     MyMessageView.ButtonSim.Visible := FMsgtype = TMsgType.MsgPergunta;
     MyMessageView.ButtonNao.Visible := FMsgtype = TMsgType.MsgPergunta;
@@ -256,7 +269,7 @@ begin
      TFoco.FocoBotaoSim: try MyMessageView.ButtonSim.SetFocus except on E: Exception do end;
      TFoco.FocoBotaoNao: try MyMessageView.ButtonNao.SetFocus; except on E: Exception do end;
     else
-     try MyMessageView.ButtonOk.SetFocus; except on E: Exception do end;
+     try MyMessageView.ButtonOk.SetFocus; except end;
     end;
 
     MyMessageView.ShowModal;
@@ -275,34 +288,82 @@ begin
 end;
 {$ENDREGION 'TMyMessage'}
 
-function showInformacao(AMsg: string): Boolean;
+{$REGION 'ShowMessage'}
+function ShowInformacao(AMessage: string): Boolean;
 begin
-   Result := TMyMessage.New.Mensagem(AMsg).MsgInformacao;
+   Result := ShowInformacao(AMessage, nil);
 end;
 
-function showAlert(AMsg: string): Boolean;
+function ShowInformacao(AMessage: string; AComponente: TWinControl): Boolean; overload;
 begin
-   Result := TMyMessage.New.Mensagem(AMsg).MsgAlert;
+   Result := TMyMessage.New.Mensagem(AMessage).Componente(AComponente).MsgInformacao;
 end;
 
-function showErro(AMsg: string): Boolean;
+function ShowAlert(AMessage: string): Boolean;
 begin
-   Result := TMyMessage.New.Mensagem(AMsg).MsgErro;
+   Result := ShowAlert(AMessage, nil);
 end;
 
-function showCampoObrigatorio(AMsg: string): Boolean;
+function ShowAlert(AMessage: string; AComponente: TWinControl): Boolean; overload;
 begin
-   Result := TMyMessage.New.Mensagem(AMsg).MsgCampoObrigatorio;
+   Result := TMyMessage.New.Mensagem(AMessage).Componente(AComponente).MsgAlert;
 end;
 
-function showPerguntaS(AMsg: string): Boolean;
+function ShowErro(AMessage: string): Boolean;
 begin
-   Result := TMyMessage.New.Mensagem(AMsg).FocoSim.MsgPergunta;
+   Result := ShowErro(AMessage, nil);
 end;
 
-function showPerguntaN(AMsg: string): Boolean;
+function ShowErro(AMessage: string; AComponente: TWinControl): Boolean; overload;
 begin
-   Result := TMyMessage.New.Mensagem(AMsg).FocoNao.MsgPergunta;
+   Result := TMyMessage.New.Mensagem(AMessage).Componente(AComponente).MsgErro;
 end;
+
+function ShowCampoObrigatorio(AMessage: string): Boolean;
+begin
+   Result := ShowCampoObrigatorio(AMessage, nil);
+end;
+
+function ShowCampoObrigatorio(AMessage: string; AComponente: TWinControl): Boolean; overload;
+begin
+   Result := TMyMessage.New.Mensagem(AMessage).Componente(AComponente).MsgCampoObrigatorio;
+end;
+
+function ShowPerguntaS(AMessage: string): Boolean;
+begin
+   Result := ShowPerguntaS(AMessage, nil);
+end;
+
+function ShowPerguntaS(AMessage: string; AComponente: TWinControl): Boolean; overload;
+begin
+   Result := TMyMessage.New.Mensagem(AMessage).Componente(AComponente).FocoSim.MsgPergunta;
+end;
+
+function ShowPerguntaN(AMessage: string): Boolean;
+begin
+   Result := ShowPerguntaN(AMessage, nil);
+end;
+
+function ShowPerguntaN(AMessage: string; AComponente: TWinControl): Boolean; overload;
+begin
+   Result := TMyMessage.New.Mensagem(AMessage).Componente(AComponente).FocoNao.MsgPergunta;
+end;
+
+function ShowOpcao(AMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer;
+begin
+   Result := showOpcao(AMessage, '', AOpcao1, AOpcao2, AOpcao3);
+end;
+
+function ShowOpcao(AMessage, AMsgCompleta, AOpcao1, AOpcao2, AOpcao3: string): Integer;
+begin
+   Result := TMyMessage.New
+              .Mensagem(AMessage)
+              .MensagemCompleta(AMsgCompleta)
+              .Opcao1(AOpcao1)
+              .Opcao2(AOpcao2)
+              .Opcao3(AOpcao3)
+              .MsgOpcao;
+end;
+{$ENDREGION 'ShowMessage'}
 
 end.
