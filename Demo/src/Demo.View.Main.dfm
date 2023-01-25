@@ -29,7 +29,7 @@ object ViewMain: TViewMain
     Top = 39
     Width = 100
     Height = 25
-    Caption = 'Warning'
+    Caption = 'Alert'
     TabOrder = 1
     OnClick = Button2Click
   end

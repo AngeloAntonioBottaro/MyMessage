@@ -19,7 +19,8 @@ uses
   Vcl.Clipbrd,
   Vcl.ImgList,
   Vcl.Buttons,
-  Vcl.Menus;
+  Vcl.Menus,
+  MyMessage.Types;
 
 const
  BUTTON_MARGEM   = 40;
@@ -28,7 +29,6 @@ const
 type
   TMyMessageView = class(TForm)
     ImageListButtons: TImageList;
-    ImageListIcon: TImageList;
     PopupMenuForm: TPopupMenu;
     Copiartexto1: TMenuItem;
     GroupBoxBotton: TPanel;
@@ -42,6 +42,7 @@ type
     ButtonOpcao1: TButton;
     ButtonOpcao2: TButton;
     ButtonOpcao3: TButton;
+    ImageListIcon: TImageList;
     procedure ButtonOkClick(Sender: TObject);
     procedure ButtonSimClick(Sender: TObject);
     procedure ButtonNaoClick(Sender: TObject);
@@ -53,8 +54,10 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
+    procedure LoadImage;
   public
     FMensagemCompleta: string;
+    FImage: TMessageType
   end;
 
 var
@@ -114,8 +117,7 @@ begin
    Constraints.MinHeight := Self.Height;
 end;
 
-procedure TMyMessageView.FormKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TMyMessageView.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
    case(Key)of
     VK_F4: if(ssAlt in Shift)then Key := 0;
@@ -147,22 +149,32 @@ end;
 procedure TMyMessageView.FormShow(Sender: TObject);
 begin
    if(ButtonOpcao1.Visible)then
-      ButtonOpcao1.Width := BUTTON_MARGEM + (Length(ButtonOpcao1.Caption) * PIXEL_POR_LETRA);
+     ButtonOpcao1.Width := BUTTON_MARGEM + (Length(ButtonOpcao1.Caption) * PIXEL_POR_LETRA);
 
    if(ButtonOpcao1.Width > 150)then
-      ButtonOpcao1.Width := 150;
+     ButtonOpcao1.Width := 150;
 
    if(ButtonOpcao2.Visible)then
-      ButtonOpcao2.Width := BUTTON_MARGEM + (Length(ButtonOpcao2.Caption) * PIXEL_POR_LETRA);
+     ButtonOpcao2.Width := BUTTON_MARGEM + (Length(ButtonOpcao2.Caption) * PIXEL_POR_LETRA);
 
    if(ButtonOpcao2.Width > 150)then
-      ButtonOpcao2.Width := 150;
+     ButtonOpcao2.Width := 150;
 
    if(ButtonOpcao3.Visible)then
-      ButtonOpcao3.Width := BUTTON_MARGEM + (Length(ButtonOpcao3.Caption) * PIXEL_POR_LETRA);
+     ButtonOpcao3.Width := BUTTON_MARGEM + (Length(ButtonOpcao3.Caption) * PIXEL_POR_LETRA);
 
    if(ButtonOpcao3.Width > 150)then
-      ButtonOpcao3.Width := 150;
+     ButtonOpcao3.Width := 150;
+
+   Self.LoadImage;
+end;
+
+procedure TMyMessageView.LoadImage;
+var
+ LPngImage: TPngImage;
+begin
+   imgIcon.Picture := nil;
+   ImageListIcon.GetBitmap(Integer(FImage), imgIcon.Picture.Bitmap);
 end;
 
 end.

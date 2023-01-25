@@ -31,9 +31,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure Button6Click(Sender: TObject);
   private
-    { Private declarations }
   public
-    { Public declarations }
   end;
 
 var
@@ -48,43 +46,43 @@ uses
 
 procedure TViewMain.Button1Click(Sender: TObject);
 begin
-   showInformacao('Informação');
+   ShowInformation('Informação');
 end;
 
 procedure TViewMain.Button2Click(Sender: TObject);
 begin
-   showAlert('Alert');
+   ShowAlert('Alert');
 end;
 
 procedure TViewMain.Button3Click(Sender: TObject);
 begin
-   showErro('Erro');
+   ShowError('Erro');
 end;
 
 procedure TViewMain.Button4Click(Sender: TObject);
 begin
-   if(showPerguntaS('Question?'))then
-     showInformacao('Sim')
+   if(ShowQuestionYes('Question?'))then
+     ShowInformation('Sim')
    else
-     showInformacao('Nao');
+     ShowInformation('Nao');
 end;
 
 procedure TViewMain.Button5Click(Sender: TObject);
 begin
-   showCampoObrigatorio('Edit1 Required');
+   ShowRequiredField('Edit1 Required');
 end;
 
 procedure TViewMain.Button6Click(Sender: TObject);
 begin
-   case(showOpcao('Selecione uma das seguintes opções',
+   case(ShowOption('Selecione uma das seguintes opções',
                   'TESTANDO MENSAGEM COMPLETA',
                   'Opção 01',
                   'Opção 02',
                   'Opção 03 teste de tamanho muito grande'))
    of
-    1: showInformacao('Opção 01');
-    2: showInformacao('Opção 02');
-    3: showInformacao('Opção 03');
+    1: ShowInformation('Opção 01');
+    2: ShowInformation('Opção 02');
+    3: ShowInformation('Opção 03');
    else
      raise Exception.Create('Nenhuma opção selecionada');
    end;
