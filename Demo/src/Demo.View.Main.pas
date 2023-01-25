@@ -23,6 +23,7 @@ type
     Button5: TButton;
     Edit1: TEdit;
     Button6: TButton;
+    Button7: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -30,6 +31,7 @@ type
     procedure Button5Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
   private
   public
   end;
@@ -86,6 +88,11 @@ begin
    else
      raise Exception.Create('Nenhuma opção selecionada');
    end;
+end;
+
+procedure TViewMain.Button7Click(Sender: TObject);
+begin
+   ShowInformation(Edit1.Text, 'Msg completa: ' + Edit1.Text, Edit1);
 end;
 
 procedure TViewMain.FormCreate(Sender: TObject);

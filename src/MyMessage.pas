@@ -149,9 +149,6 @@ end;
 
 function TMyMessage.CompleteMessageContent: string;
 begin
-   if(FMensagemCompleta = EmptyStr)then
-     Self.CompleteMessageContent(Self.MessageContent);
-
    Result := FMensagemCompleta;
 end;
 
@@ -251,8 +248,8 @@ begin
     MyMessageView.Caption := Title;
 
     //MENSAGEM
-    MyMessageView.lbMensagem.Caption := Self.MessageContent;
-    MyMessageView.FMensagemCompleta  := Self.CompleteMessageContent;
+    MyMessageView.FMessageContent          := Self.MessageContent;
+    MyMessageView.FCompleteMessageContent  := Self.CompleteMessageContent;
 
     //IMAGEM
     MyMessageView.FImage := FMsgType;

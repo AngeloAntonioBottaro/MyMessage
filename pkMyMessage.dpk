@@ -36,6 +36,7 @@ contains
   MyMessage in 'src\MyMessage.pas',
   MyMessage.View in 'src\MyMessage.View.pas' {MyMessageView},
   MyMessage.Types in 'src\MyMessage.Types.pas',
-  MyMessage.Interfaces in 'src\MyMessage.Interfaces.pas';
+  MyMessage.Interfaces in 'src\MyMessage.Interfaces.pas',
+  MyMessage.Helpers.TMemo in 'src\MyMessage.Helpers.TMemo.pas';
 
 end.

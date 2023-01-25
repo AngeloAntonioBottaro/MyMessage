@@ -20,7 +20,8 @@ uses
   Vcl.ImgList,
   Vcl.Buttons,
   Vcl.Menus,
-  MyMessage.Types;
+  MyMessage.Types,
+  MyMessage.Helpers.TMemo;
 
 const
  BUTTON_MARGEM   = 40;
@@ -36,13 +37,22 @@ type
     ButtonSim: TButton;
     ButtonNao: TButton;
     Panel2: TPanel;
-    lbMensagem: TLabel;
-    GridPanel1: TGridPanel;
-    imgIcon: TImage;
     ButtonOpcao1: TButton;
     ButtonOpcao2: TButton;
     ButtonOpcao3: TButton;
     ImageListIcon: TImageList;
+    pnImage: TPanel;
+    imgAlert: TImage;
+    imgError: TImage;
+    imgInformation: TImage;
+    imgOption: TImage;
+    imgQuestion: TImage;
+    imgRequiredField: TImage;
+    pnTop: TPanel;
+    pnBotton: TPanel;
+    mmMessage: TMemo;
+    AlternarMensagem1: TMenuItem;
+    N1: TMenuItem;
     procedure ButtonOkClick(Sender: TObject);
     procedure ButtonSimClick(Sender: TObject);
     procedure ButtonNaoClick(Sender: TObject);
@@ -53,10 +63,16 @@ type
     procedure ButtonOpcao3Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure AlternarMensagem1Click(Sender: TObject);
+    procedure PopupMenuFormPopup(Sender: TObject);
   private
     procedure LoadImage;
+    procedure ConfButtons;
+    procedure LoadMessage;
+    procedure LoadCompleteMessage;
   public
-    FMensagemCompleta: string;
+    FMessageContent: string;
+    FCompleteMessageContent: string;
     FImage: TMessageType
   end;
 
@@ -106,7 +122,11 @@ end;
 procedure TMyMessageView.Copiartexto1Click(Sender: TObject);
 begin
    try
-     Clipboard.AsText := FMensagemCompleta;
+     Clipboard.AsText := FMessageContent +
+                         sLineBreak +
+                         '*********************' +
+                         sLineBreak +
+                         FCompleteMessageContent;
    except
    end;
 end;
@@ -148,6 +168,13 @@ end;
 
 procedure TMyMessageView.FormShow(Sender: TObject);
 begin
+   Self.ConfButtons;
+   Self.LoadImage;
+   Self.LoadMessage;
+end;
+
+procedure TMyMessageView.ConfButtons;
+begin
    if(ButtonOpcao1.Visible)then
      ButtonOpcao1.Width := BUTTON_MARGEM + (Length(ButtonOpcao1.Caption) * PIXEL_POR_LETRA);
 
@@ -165,16 +192,43 @@ begin
 
    if(ButtonOpcao3.Width > 150)then
      ButtonOpcao3.Width := 150;
-
-   Self.LoadImage;
 end;
 
 procedure TMyMessageView.LoadImage;
-var
- LPngImage: TPngImage;
 begin
-   imgIcon.Picture := nil;
-   ImageListIcon.GetBitmap(Integer(FImage), imgIcon.Picture.Bitmap);
+   imgInformation.Visible   := FImage = TMessageType.Information;
+   imgAlert.Visible         := FImage = TMessageType.Alert;
+   imgError.Visible         := FImage = TMessageType.Error;
+   imgRequiredField.Visible := FImage = TMessageType.RequiredField;
+   imgQuestion.Visible      := FImage = TMessageType.Question;
+   imgOption.Visible        := FImage = TMessageType.Option;
+end;
+
+procedure TMyMessageView.LoadMessage;
+begin
+   MyMessageView.mmMessage.TextVerticalCenter(MyMessageView.mmMessage.Tag, FMessageContent);
+   AlternarMensagem1.Caption := 'Mostrar mensagem completa';
+   AlternarMensagem1.Tag     := 1;
+end;
+
+procedure TMyMessageView.PopupMenuFormPopup(Sender: TObject);
+begin
+   AlternarMensagem1.Visible := not FCompleteMessageContent.IsEmpty;
+end;
+
+procedure TMyMessageView.LoadCompleteMessage;
+begin
+   MyMessageView.mmMessage.TextVerticalCenter(MyMessageView.mmMessage.Tag, FCompleteMessageContent);
+   AlternarMensagem1.Caption := 'Mostrar mensagem simples';
+   AlternarMensagem1.Tag     := 2;
+end;
+
+procedure TMyMessageView.AlternarMensagem1Click(Sender: TObject);
+begin
+   if(AlternarMensagem1.Tag = 2)then
+     Self.LoadMessage
+   else
+     Self.LoadCompleteMessage;
 end;
 
 end.

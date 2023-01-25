@@ -77,4 +77,13 @@ object ViewMain: TViewMain
     TabOrder = 6
     OnClick = Button6Click
   end
+  object Button7: TButton
+    Left = 216
+    Top = 48
+    Width = 121
+    Height = 25
+    Caption = 'long'
+    TabOrder = 7
+    OnClick = Button7Click
+  end
 end
