@@ -16,21 +16,21 @@ type
    function MsgPergunta: Boolean; overload;
    function MsgOpcao: Integer;
 
-   function Title(aValue: string): IMyMessage; overload;
+   function Title(AValue: string): IMyMessage; overload;
    function Title: string; overload;
-   function Mensagem(aValue: string): IMyMessage; overload;
+   function Mensagem(AValue: string): IMyMessage; overload;
    function Mensagem: string; overload;
-   function MensagemCompleta(aValue: string): IMyMessage; overload;
+   function MensagemCompleta(AValue: string): IMyMessage; overload;
    function MensagemCompleta: string; overload;
    function FocoSim: IMyMessage;
    function FocoNao: IMyMessage;
-   function Componente(aValue: TWinControl): IMyMessage;
-   function MensagemOpcao1(aValue: string): IMyMessage; overload;
-   function MensagemOpcao1: string; overload;
-   function MensagemOpcao2(aValue: string): IMyMessage; overload;
-   function MensagemOpcao2: string; overload;
-   function MensagemOpcao3(aValue: string): IMyMessage; overload;
-   function MensagemOpcao3: string; overload;
+   function Componente(AValue: TWinControl): IMyMessage;
+   function Opcao1(AValue: string): IMyMessage; overload;
+   function Opcao1: string; overload;
+   function Opcao2(AValue: string): IMyMessage; overload;
+   function Opcao2: string; overload;
+   function Opcao3(AValue: string): IMyMessage; overload;
+   function Opcao3: string; overload;
   end;
 
 implementation

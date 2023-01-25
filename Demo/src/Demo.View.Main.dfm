@@ -1,7 +1,7 @@
-object Form1: TForm1
+object ViewMain: TViewMain
   Left = 0
   Top = 0
-  Caption = 'Form1'
+  Caption = 'Demo'
   ClientHeight = 299
   ClientWidth = 635
   Color = clBtnFace
@@ -76,41 +76,5 @@ object Form1: TForm1
     Caption = 'Op'#231'oes'
     TabOrder = 6
     OnClick = Button6Click
-  end
-  object Button7: TButton
-    Left = 216
-    Top = 40
-    Width = 100
-    Height = 25
-    Caption = 'Excep Info'
-    TabOrder = 7
-    OnClick = Button7Click
-  end
-  object Button8: TButton
-    Left = 216
-    Top = 71
-    Width = 100
-    Height = 25
-    Caption = 'Excep Warning'
-    TabOrder = 8
-    OnClick = Button8Click
-  end
-  object Button9: TButton
-    Left = 216
-    Top = 102
-    Width = 100
-    Height = 25
-    Caption = 'Excep Error'
-    TabOrder = 9
-    OnClick = Button9Click
-  end
-  object Button10: TButton
-    Left = 216
-    Top = 133
-    Width = 100
-    Height = 25
-    Caption = 'Excep Required'
-    TabOrder = 10
-    OnClick = Button10Click
   end
 end
