@@ -7,8 +7,9 @@ uses
 
 type
   {$SCOPEDENUMS ON}
-  TMessageType = (Information, Alert, Error, Question, RequiredField, Option);
-  TButtonFocus = (Ok, Yes, No);
+  TMessageType    = (None, Information, Warning, Error, RequiredField, Printer, Question, Option);
+  TMessageButtons = (Ok, YesNo, Options);
+  TButtonFocus    = (None, Ok, Yes, No, Option1, Option2, Option3);
   {$SCOPEDENUMS OFF}
 
   TMyMessageTypeHelper = record helper for TMessageType

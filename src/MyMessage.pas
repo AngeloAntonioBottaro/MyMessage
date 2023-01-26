@@ -20,12 +20,8 @@ type
     FMsgOpcao1: string;
     FMsgOpcao2: string;
     FMsgOpcao3: string;
-    FButtonFocus: TButtonFocus;
-    FMsgType: TMessageType;
     FComponent: TWinControl;
     FModalResult: Integer;
-
-    function ShowMensagem: Boolean;
   protected
     function Title(AValue: string): IMyMessage; overload;
     function Title: string; overload;
@@ -33,8 +29,6 @@ type
     function MessageContent: string; overload;
     function CompleteMessageContent(AValue: string): IMyMessage; overload;
     function CompleteMessageContent: string; overload;
-    function FocusOnYes: IMyMessage;
-    function FocusOnNo: IMyMessage;
     function Componente(AValue: TWinControl): IMyMessage;
 
     function Option1(AValue: string): IMyMessage; overload;
@@ -44,12 +38,10 @@ type
     function Option3(AValue: string): IMyMessage; overload;
     function Option3: string; overload;
 
-    function InformationMessage: Boolean; overload;
-    function AlertMessage: Boolean; overload;
-    function ErrorMessage: Boolean; overload;
-    function RequiredFieldMessage: Boolean; overload;
-    function QuestionMessage: Boolean; overload;
-    function OptionMessage: Integer;
+    function ShowMessage(AIcon: TMessageType = TMessageType.None;
+                                AButtons: TMessageButtons = TMessageButtons.Ok;
+                                AFocus: TButtonFocus = TButtonFocus.None): Boolean;
+    function ModalResult: Integer;
   public
     class function New: IMyMessage;
     constructor Create;
@@ -62,18 +54,23 @@ function ShowInformation(AMessage: string): Boolean; overload;
 function ShowInformation(AMessage: string; ACompleteMessage: string): Boolean; overload;
 function ShowInformation(AMessage: string; AComponente: TWinControl): Boolean; overload;
 function ShowInformation(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
-function ShowAlert(AMessage: string): Boolean; overload;
-function ShowAlert(AMessage: string; ACompleteMessage: string): Boolean; overload;
-function ShowAlert(AMessage: string; AComponente: TWinControl): Boolean; overload;
-function ShowAlert(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowWarning(AMessage: string): Boolean; overload;
+function ShowWarning(AMessage: string; ACompleteMessage: string): Boolean; overload;
+function ShowWarning(AMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowWarning(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
 function ShowError(AMessage: string): Boolean; overload;
 function ShowError(AMessage: string; ACompleteMessage: string): Boolean; overload;
 function ShowError(AMessage: string; AComponente: TWinControl): Boolean; overload;
 function ShowError(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowRequiredField: Boolean; overload;
 function ShowRequiredField(AMessage: string): Boolean; overload;
 function ShowRequiredField(AMessage: string; ACompleteMessage: string): Boolean; overload;
 function ShowRequiredField(AMessage: string; AComponente: TWinControl): Boolean; overload;
 function ShowRequiredField(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowPrinter(AMessage: string): Boolean; overload;
+function ShowPrinter(AMessage: string; ACompleteMessage: string): Boolean; overload;
+function ShowPrinter(AMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowPrinter(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
 function ShowQuestionYes(AMessage: string): Boolean; overload;
 function ShowQuestionYes(AMessage: string; ACompleteMessage: string): Boolean; overload;
 function ShowQuestionYes(AMessage: string; AComponente: TWinControl): Boolean; overload;
@@ -82,11 +79,18 @@ function ShowQuestionNo(AMessage: string): Boolean; overload;
 function ShowQuestionNo(AMessage: string; ACompleteMessage: string): Boolean; overload;
 function ShowQuestionNo(AMessage: string; AComponente: TWinControl): Boolean; overload;
 function ShowQuestionNo(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
-function ShowOption(AMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
-function ShowOption(AMessage, AMsgCompleta, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
+function ShowOption1(AMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
+function ShowOption1(AMessage, ACompleteMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
+function ShowOption2(AMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
+function ShowOption2(AMessage, ACompleteMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
+function ShowOption3(AMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
+function ShowOption3(AMessage, ACompleteMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
 {$ENDREGION 'ShowMessage'}
 
 implementation
+
+uses
+  MyMessage.Consts;
 
 {$REGION 'TMyMessage'}
 class function TMyMessage.New: IMyMessage;
@@ -102,8 +106,6 @@ begin
    FMsgOpcao1        := EmptyStr;
    FMsgOpcao2        := EmptyStr;
    FMsgOpcao3        := EmptyStr;
-   FButtonFocus      := TButtonFocus.ok;
-   FMsgType          := TMessageType.Information;
    FComponent        := nil;
    FModalResult      := 0;
 end;
@@ -124,8 +126,8 @@ end;
 
 function TMyMessage.Title: string;
 begin
-   if(FTitle = EmptyStr)then
-     Title('Mensagem do sistema');
+   if(FTitle.IsEmpty)then
+     Self.Title(DEFAULT_TITLE);
 
    Result := FTitle;
 end;
@@ -185,62 +187,15 @@ begin
    Result := FMsgOpcao3;
 end;
 
-function TMyMessage.FocusOnYes: IMyMessage;
-begin
-   Result       := Self;
-   FButtonFocus := TButtonFocus.Yes;
-end;
-
-function TMyMessage.FocusOnNo: IMyMessage;
-begin
-   Result       := Self;
-   FButtonFocus := TButtonFocus.No;
-end;
-
 function TMyMessage.Componente(AValue: TWinControl): IMyMessage;
 begin
    Result     := Self;
    FComponent := AValue;
 end;
 
-function TMyMessage.InformationMessage: Boolean;
-begin
-   FMsgType := TMessageType.Information;
-   Result   := Self.ShowMensagem;
-end;
-
-function TMyMessage.AlertMessage: Boolean;
-begin
-   FMsgType := TMessageType.Alert;
-   Result   := Self.ShowMensagem;
-end;
-
-function TMyMessage.ErrorMessage: Boolean;
-begin
-   FMsgType := TMessageType.Error;
-   Result   := Self.ShowMensagem;
-end;
-
-function TMyMessage.QuestionMessage: Boolean;
-begin
-   FMsgType := TMessageType.Question;
-   Result   := Self.ShowMensagem;
-end;
-
-function TMyMessage.RequiredFieldMessage: Boolean;
-begin
-   FMsgType := TMessageType.RequiredField;
-   Result   := Self.ShowMensagem;
-end;
-
-function TMyMessage.OptionMessage: Integer;
-begin
-   FMsgType := TMessageType.Option;
-   Self.ShowMensagem;
-   Result := FModalResult;
-end;
-
-function TMyMessage.ShowMensagem: Boolean;
+function TMyMessage.ShowMessage(AIcon: TMessageType = TMessageType.None;
+                                AButtons: TMessageButtons = TMessageButtons.Ok;
+                                AFocus: TButtonFocus = TButtonFocus.None): Boolean;
 begin
   if(MyMessageView = nil)then Application.CreateForm(TMyMessageView, MyMessageView);
   try
@@ -252,10 +207,10 @@ begin
     MyMessageView.FCompleteMessageContent  := Self.CompleteMessageContent;
 
     //IMAGEM
-    MyMessageView.FImage := FMsgType;
+    MyMessageView.FImage := AIcon;
 
     //BOTOES
-    if(FMsgType = TMessageType.Option)then
+    if(AButtons = TMessageButtons.Options)then
     begin
        MyMessageView.ButtonOpcao1.Visible := (Self.Option1 <> EmptyStr);
        MyMessageView.ButtonOpcao1.Caption := Self.Option1;
@@ -265,14 +220,17 @@ begin
        MyMessageView.ButtonOpcao3.Caption := Self.Option3;
     end;
 
-    MyMessageView.ButtonSim.Visible := FMsgType = TMessageType.Question;
-    MyMessageView.ButtonNao.Visible := FMsgType = TMessageType.Question;
+    MyMessageView.ButtonSim.Visible := AButtons = TMessageButtons.YesNo;
+    MyMessageView.ButtonNao.Visible := AButtons = TMessageButtons.YesNo;
 
-    MyMessageView.ButtonOk.Visible := not ((FMsgType = TMessageType.Question)or(FMsgType = TMessageType.Option));
+    MyMessageView.ButtonOk.Visible := not ((AButtons = TMessageButtons.Options)or(AButtons = TMessageButtons.YesNo));
 
-    case(FButtonFocus)of
+    case(AFocus)of
      TButtonFocus.Yes: try MyMessageView.ButtonSim.SetFocus except end;
      TButtonFocus.No: try MyMessageView.ButtonNao.SetFocus; except end;
+     TButtonFocus.Option1: try MyMessageView.ButtonOpcao1.SetFocus; except end;
+     TButtonFocus.Option2: try MyMessageView.ButtonOpcao2.SetFocus; except end;
+     TButtonFocus.Option3: try MyMessageView.ButtonOpcao3.SetFocus; except end;
     else
      try MyMessageView.ButtonOk.SetFocus; except end;
     end;
@@ -290,6 +248,11 @@ begin
   finally
     FreeAndNil(MyMessageView);
   end;
+end;
+
+function TMyMessage.ModalResult: Integer;
+begin
+   Result := FModalResult;
 end;
 {$ENDREGION 'TMyMessage'}
 
@@ -312,28 +275,28 @@ end;
 
 function ShowInformation(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
 begin
-   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).InformationMessage;
+   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).ShowMessage(TMessageType.Information);
 end;
 
-//ALERT
-function ShowAlert(AMessage: string): Boolean;
+//WARNING
+function ShowWarning(AMessage: string): Boolean;
 begin
-   Result := ShowAlert(AMessage, '');
+   Result := ShowWarning(AMessage, '');
 end;
 
-function ShowAlert(AMessage: string; ACompleteMessage: string): Boolean; overload;
+function ShowWarning(AMessage: string; ACompleteMessage: string): Boolean; overload;
 begin
-   Result := ShowAlert(AMessage, ACompleteMessage, nil);
+   Result := ShowWarning(AMessage, ACompleteMessage, nil);
 end;
 
-function ShowAlert(AMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowWarning(AMessage: string; AComponente: TWinControl): Boolean; overload;
 begin
-   Result := ShowAlert(AMessage, '', AComponente);
+   Result := ShowWarning(AMessage, '', AComponente);
 end;
 
-function ShowAlert(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowWarning(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
 begin
-   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).AlertMessage;
+   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).ShowMessage(TMessageType.Warning);
 end;
 
 //ERROR
@@ -354,10 +317,15 @@ end;
 
 function ShowError(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
 begin
-   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).ErrorMessage;
+   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).ShowMessage(TMessageType.Error);
 end;
 
 //REQUIRED FIELD
+function ShowRequiredField: Boolean; overload;
+begin
+   Result := ShowRequiredField(EMPTY_REQUIRED_FIELD, '');
+end;
+
 function ShowRequiredField(AMessage: string): Boolean;
 begin
    Result := ShowRequiredField(AMessage, '');
@@ -375,7 +343,28 @@ end;
 
 function ShowRequiredField(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
 begin
-   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).RequiredFieldMessage;
+   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).ShowMessage(TMessageType.RequiredField);
+end;
+
+//PRINTER
+function ShowPrinter(AMessage: string): Boolean;
+begin
+   Result := ShowPrinter(AMessage, '');
+end;
+
+function ShowPrinter(AMessage: string; ACompleteMessage: string): Boolean; overload;
+begin
+   Result := ShowPrinter(AMessage, ACompleteMessage, nil);
+end;
+
+function ShowPrinter(AMessage: string; AComponente: TWinControl): Boolean; overload;
+begin
+   Result := ShowPrinter(AMessage, '', AComponente);
+end;
+
+function ShowPrinter(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
+begin
+   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).ShowMessage(TMessageType.Printer);
 end;
 
 //QUESTION YES
@@ -396,7 +385,7 @@ end;
 
 function ShowQuestionYes(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
 begin
-   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).FocusOnYes.QuestionMessage;
+   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).ShowMessage(TMessageType.Question, TMessageButtons.YesNo, TButtonFocus.Yes);
 end;
 
 //QUESTION NO
@@ -417,24 +406,47 @@ end;
 
 function ShowQuestionNo(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
 begin
-   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).FocusOnNo.QuestionMessage;
+   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).ShowMessage(TMessageType.Question, TMessageButtons.YesNo, TButtonFocus.No);
 end;
 
 //OPTION
-function ShowOption(AMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer;
+function ShowOption(AMessage, AMsgCompleta, AOpcao1, AOpcao2, AOpcao3: string; AFocus: TButtonFocus): Integer;
+var
+  LMsg: IMyMessage;
 begin
-   Result := ShowOption(AMessage, '', AOpcao1, AOpcao2, AOpcao3);
+   LMsg   := TMyMessage.New;
+   LMsg.MessageContent(AMessage).CompleteMessageContent(AMsgCompleta).Option1(AOpcao1).Option2(AOpcao2).Option3(AOpcao3).ShowMessage(TMessageType.Option, TMessageButtons.Options, AFocus);
+   Result := LMsg.ModalResult;
 end;
 
-function ShowOption(AMessage, AMsgCompleta, AOpcao1, AOpcao2, AOpcao3: string): Integer;
+function ShowOption1(AMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer;
 begin
-   Result := TMyMessage.New
-              .MessageContent(AMessage)
-              .CompleteMessageContent(AMsgCompleta)
-              .Option1(AOpcao1)
-              .Option2(AOpcao2)
-              .Option3(AOpcao3)
-              .OptionMessage;
+   Result := ShowOption(AMessage, '', AOpcao1, AOpcao2, AOpcao3, TButtonFocus.Option1);
+end;
+
+function ShowOption1(AMessage, ACompleteMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
+begin
+   Result := ShowOption(AMessage, ACompleteMessage, AOpcao1, AOpcao2, AOpcao3, TButtonFocus.Option1);
+end;
+
+function ShowOption2(AMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer;
+begin
+   Result := ShowOption(AMessage, '', AOpcao1, AOpcao2, AOpcao3, TButtonFocus.Option2);
+end;
+
+function ShowOption2(AMessage, ACompleteMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
+begin
+   Result := ShowOption(AMessage, ACompleteMessage, AOpcao1, AOpcao2, AOpcao3, TButtonFocus.Option2);
+end;
+
+function ShowOption3(AMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer;
+begin
+   Result := ShowOption(AMessage, '', AOpcao1, AOpcao2, AOpcao3, TButtonFocus.Option3);
+end;
+
+function ShowOption3(AMessage, ACompleteMessage, AOpcao1, AOpcao2, AOpcao3: string): Integer; overload;
+begin
+   Result := ShowOption(AMessage, ACompleteMessage, AOpcao1, AOpcao2, AOpcao3, TButtonFocus.Option3);
 end;
 {$ENDREGION 'ShowMessage'}
 

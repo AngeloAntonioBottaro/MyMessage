@@ -24,6 +24,8 @@ type
     Edit1: TEdit;
     Button6: TButton;
     Button7: TButton;
+    Button8: TButton;
+    Button9: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -32,6 +34,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
+    procedure Button9Click(Sender: TObject);
   private
   public
   end;
@@ -53,7 +57,7 @@ end;
 
 procedure TViewMain.Button2Click(Sender: TObject);
 begin
-   ShowAlert('Alert');
+   ShowWarning('Warning');
 end;
 
 procedure TViewMain.Button3Click(Sender: TObject);
@@ -69,14 +73,23 @@ begin
      ShowInformation('Nao');
 end;
 
+procedure TViewMain.Button9Click(Sender: TObject);
+begin
+   if(ShowQuestionNo('Question?'))then
+     ShowInformation('Sim')
+   else
+     ShowInformation('Nao');
+end;
+
 procedure TViewMain.Button5Click(Sender: TObject);
 begin
    ShowRequiredField('Edit1 Required');
+   ShowRequiredField;
 end;
 
 procedure TViewMain.Button6Click(Sender: TObject);
 begin
-   case(ShowOption('Selecione uma das seguintes opções',
+   case(ShowOption3('Selecione uma das seguintes opções(Foco2)',
                   'TESTANDO MENSAGEM COMPLETA',
                   'Opção 01',
                   'Opção 02',
@@ -93,6 +106,11 @@ end;
 procedure TViewMain.Button7Click(Sender: TObject);
 begin
    ShowInformation(Edit1.Text, 'Msg completa: ' + Edit1.Text, Edit1);
+end;
+
+procedure TViewMain.Button8Click(Sender: TObject);
+begin
+   ShowPrinter('Printer');
 end;
 
 procedure TViewMain.FormCreate(Sender: TObject);

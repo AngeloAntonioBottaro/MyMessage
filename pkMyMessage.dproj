@@ -105,6 +105,7 @@
         <DCCReference Include="src\MyMessage.Types.pas"/>
         <DCCReference Include="src\MyMessage.Interfaces.pas"/>
         <DCCReference Include="src\MyMessage.Helpers.TMemo.pas"/>
+        <DCCReference Include="src\MyMessage.Consts.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

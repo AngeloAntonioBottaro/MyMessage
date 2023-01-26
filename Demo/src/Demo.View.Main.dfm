@@ -29,7 +29,7 @@ object ViewMain: TViewMain
     Top = 39
     Width = 100
     Height = 25
-    Caption = 'Alert'
+    Caption = 'Warning'
     TabOrder = 1
     OnClick = Button2Click
   end
@@ -47,13 +47,13 @@ object ViewMain: TViewMain
     Top = 101
     Width = 100
     Height = 25
-    Caption = 'Question'
+    Caption = 'Question Yes'
     TabOrder = 3
     OnClick = Button4Click
   end
   object Button5: TButton
     Left = 16
-    Top = 132
+    Top = 163
     Width = 100
     Height = 25
     Caption = 'Required'
@@ -70,7 +70,7 @@ object ViewMain: TViewMain
   end
   object Button6: TButton
     Left = 16
-    Top = 192
+    Top = 225
     Width = 100
     Height = 25
     Caption = 'Op'#231'oes'
@@ -82,8 +82,26 @@ object ViewMain: TViewMain
     Top = 48
     Width = 121
     Height = 25
-    Caption = 'long'
+    Caption = 'Complete message'
     TabOrder = 7
     OnClick = Button7Click
+  end
+  object Button8: TButton
+    Left = 16
+    Top = 194
+    Width = 100
+    Height = 25
+    Caption = 'Printer'
+    TabOrder = 8
+    OnClick = Button8Click
+  end
+  object Button9: TButton
+    Left = 16
+    Top = 132
+    Width = 100
+    Height = 25
+    Caption = 'Question No'
+    TabOrder = 9
+    OnClick = Button9Click
   end
 end

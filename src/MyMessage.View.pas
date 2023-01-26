@@ -53,6 +53,7 @@ type
     mmMessage: TMemo;
     AlternarMensagem1: TMenuItem;
     N1: TMenuItem;
+    imgPrinter: TImage;
     procedure ButtonOkClick(Sender: TObject);
     procedure ButtonSimClick(Sender: TObject);
     procedure ButtonNaoClick(Sender: TObject);
@@ -192,14 +193,22 @@ begin
 
    if(ButtonOpcao3.Width > 150)then
      ButtonOpcao3.Width := 150;
+
+   ButtonOpcao1.Align := alLeft;
+   ButtonOpcao2.Align := alLeft;
+   ButtonOpcao3.Align := alLeft;
+   ButtonOpcao1.Align := alRight;
+   ButtonOpcao2.Align := alRight;
+   ButtonOpcao3.Align := alRight;
 end;
 
 procedure TMyMessageView.LoadImage;
 begin
    imgInformation.Visible   := FImage = TMessageType.Information;
-   imgAlert.Visible         := FImage = TMessageType.Alert;
+   imgAlert.Visible         := FImage = TMessageType.Warning;
    imgError.Visible         := FImage = TMessageType.Error;
    imgRequiredField.Visible := FImage = TMessageType.RequiredField;
+   imgPrinter.Visible       := FImage = TMessageType.Printer;
    imgQuestion.Visible      := FImage = TMessageType.Question;
    imgOption.Visible        := FImage = TMessageType.Option;
 end;
@@ -214,10 +223,14 @@ end;
 procedure TMyMessageView.PopupMenuFormPopup(Sender: TObject);
 begin
    AlternarMensagem1.Visible := not FCompleteMessageContent.IsEmpty;
+   AlternarMensagem1.ImageIndex := AlternarMensagem1.Tag;
 end;
 
 procedure TMyMessageView.LoadCompleteMessage;
 begin
+   if(FCompleteMessageContent.IsEmpty)then
+     Exit;
+
    MyMessageView.mmMessage.TextVerticalCenter(MyMessageView.mmMessage.Tag, FCompleteMessageContent);
    AlternarMensagem1.Caption := 'Mostrar mensagem simples';
    AlternarMensagem1.Tag     := 2;
