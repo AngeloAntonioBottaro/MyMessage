@@ -3,7 +3,7 @@ unit MyMessage.Consts;
 interface
 
 const
-  DEFAULT_TITLE        = '';
+  DEFAULT_TITLE        = 'Mensagem do sistema';
   EMPTY_REQUIRED_FIELD = 'Campo obrigatório não preenchido/informado';
 
 implementation

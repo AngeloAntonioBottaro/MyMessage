@@ -29,6 +29,7 @@ object MyMessageView: TMyMessageView
     Height = 39
     Align = alBottom
     TabOrder = 0
+    StyleElements = []
     object ButtonOk: TButton
       AlignWithMargins = True
       Left = 225
@@ -121,7 +122,7 @@ object MyMessageView: TMyMessageView
       OnClick = ButtonOpcao3Click
     end
   end
-  object Panel2: TPanel
+  object pnTela: TPanel
     AlignWithMargins = True
     Left = 2
     Top = 2
@@ -134,6 +135,7 @@ object MyMessageView: TMyMessageView
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
+    StyleElements = []
     object pnImage: TPanel
       Left = 0
       Top = 0
@@ -416,7 +418,9 @@ object MyMessageView: TMyMessageView
         Height = 60
         Align = alTop
         BevelOuter = bvNone
+        ParentColor = True
         TabOrder = 0
+        StyleElements = []
       end
       object pnBotton: TPanel
         Left = 0
@@ -425,7 +429,9 @@ object MyMessageView: TMyMessageView
         Height = 60
         Align = alBottom
         BevelOuter = bvNone
+        ParentColor = True
         TabOrder = 1
+        StyleElements = []
       end
     end
     object mmMessage: TMemo
@@ -462,6 +468,7 @@ object MyMessageView: TMyMessageView
       ParentFont = False
       PopupMenu = PopupMenuForm
       TabOrder = 1
+      StyleElements = []
     end
   end
   object ImageListButtons: TImageList

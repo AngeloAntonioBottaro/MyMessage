@@ -200,7 +200,7 @@ begin
   if(MyMessageView = nil)then Application.CreateForm(TMyMessageView, MyMessageView);
   try
     //TITULO
-    MyMessageView.Caption := Title;
+    MyMessageView.Caption := Self.Title;
 
     //MENSAGEM
     MyMessageView.FMessageContent          := Self.MessageContent;

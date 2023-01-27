@@ -36,7 +36,7 @@ type
     ButtonOk: TButton;
     ButtonSim: TButton;
     ButtonNao: TButton;
-    Panel2: TPanel;
+    pnTela: TPanel;
     ButtonOpcao1: TButton;
     ButtonOpcao2: TButton;
     ButtonOpcao3: TButton;
@@ -67,6 +67,7 @@ type
     procedure AlternarMensagem1Click(Sender: TObject);
     procedure PopupMenuFormPopup(Sender: TObject);
   private
+    procedure ConfForm;
     procedure LoadImage;
     procedure ConfButtons;
     procedure LoadMessage;
@@ -169,6 +170,12 @@ end;
 
 procedure TMyMessageView.FormShow(Sender: TObject);
 begin
+   Self.ConfForm;
+end;
+
+procedure TMyMessageView.ConfForm;
+begin
+   pnTela.Color := clBtnFace;
    Self.ConfButtons;
    Self.LoadImage;
    Self.LoadMessage;
