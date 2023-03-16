@@ -54,6 +54,7 @@ type
     AlternarMensagem1: TMenuItem;
     N1: TMenuItem;
     imgPrinter: TImage;
+    imgDone: TImage;
     procedure ButtonOkClick(Sender: TObject);
     procedure ButtonSimClick(Sender: TObject);
     procedure ButtonNaoClick(Sender: TObject);
@@ -214,6 +215,7 @@ begin
    imgInformation.Visible   := FImage = TMessageType.Information;
    imgAlert.Visible         := FImage = TMessageType.Warning;
    imgError.Visible         := FImage = TMessageType.Error;
+   imgDone.Visible          := FImage = TMessageType.Done;
    imgRequiredField.Visible := FImage = TMessageType.RequiredField;
    imgPrinter.Visible       := FImage = TMessageType.Printer;
    imgQuestion.Visible      := FImage = TMessageType.Question;

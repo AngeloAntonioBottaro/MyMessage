@@ -62,6 +62,10 @@ function ShowError(AMessage: string): Boolean; overload;
 function ShowError(AMessage: string; ACompleteMessage: string): Boolean; overload;
 function ShowError(AMessage: string; AComponente: TWinControl): Boolean; overload;
 function ShowError(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowDone(AMessage: string): Boolean; overload;
+function ShowDone(AMessage: string; ACompleteMessage: string): Boolean; overload;
+function ShowDone(AMessage: string; AComponente: TWinControl): Boolean; overload;
+function ShowDone(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
 function ShowRequired: Boolean; overload;
 function ShowRequired(AMessage: string): Boolean; overload;
 function ShowRequired(AMessage: string; ACompleteMessage: string): Boolean; overload;
@@ -318,6 +322,27 @@ end;
 function ShowError(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
 begin
    Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).ShowMessage(TMessageType.Error);
+end;
+
+//DONE
+function ShowDone(AMessage: string): Boolean;
+begin
+   Result := ShowDone(AMessage, '');
+end;
+
+function ShowDone(AMessage: string; ACompleteMessage: string): Boolean; overload;
+begin
+   Result := ShowDone(AMessage, ACompleteMessage, nil);
+end;
+
+function ShowDone(AMessage: string; AComponente: TWinControl): Boolean; overload;
+begin
+   Result := ShowDone(AMessage, '', AComponente);
+end;
+
+function ShowDone(AMessage: string; ACompleteMessage: string; AComponente: TWinControl): Boolean; overload;
+begin
+   Result := TMyMessage.New.MessageContent(AMessage).CompleteMessageContent(ACompleteMessage).Componente(AComponente).ShowMessage(TMessageType.Done);
 end;
 
 //REQUIRED FIELD

@@ -7,7 +7,7 @@ uses
 
 type
   {$SCOPEDENUMS ON}
-  TMessageType    = (None, Information, Warning, Error, RequiredField, Printer, Question, Option);
+  TMessageType    = (None, Information, Warning, Error, Done, RequiredField, Printer, Question, Option);
   TMessageButtons = (Ok, YesNo, Options);
   TButtonFocus    = (None, Ok, Yes, No, Option1, Option2, Option3);
   {$SCOPEDENUMS OFF}
