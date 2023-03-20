@@ -83,8 +83,8 @@ end;
 
 procedure TViewMain.Button5Click(Sender: TObject);
 begin
-   ShowRequiredField('Edit1 Required');
-   ShowRequiredField;
+   ShowRequired('Edit1 Required');
+   ShowRequired;
 end;
 
 procedure TViewMain.Button6Click(Sender: TObject);

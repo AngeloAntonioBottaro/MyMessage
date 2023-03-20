@@ -5,7 +5,7 @@ object MyMessageView: TMyMessageView
   BorderWidth = 2
   Caption = 'Mensagem do sistema'
   ClientHeight = 237
-  ClientWidth = 541
+  ClientWidth = 548
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,6 @@ object MyMessageView: TMyMessageView
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
-  PopupMenu = PopupMenuForm
   Position = poScreenCenter
   ShowHint = True
   OnCreate = FormCreate
@@ -25,14 +24,14 @@ object MyMessageView: TMyMessageView
   object GroupBoxBotton: TPanel
     Left = 0
     Top = 198
-    Width = 541
+    Width = 548
     Height = 39
     Align = alBottom
     TabOrder = 0
     StyleElements = []
     object ButtonOk: TButton
       AlignWithMargins = True
-      Left = 225
+      Left = 232
       Top = 4
       Width = 100
       Height = 31
@@ -46,7 +45,7 @@ object MyMessageView: TMyMessageView
     end
     object ButtonSim: TButton
       AlignWithMargins = True
-      Left = 331
+      Left = 338
       Top = 4
       Width = 100
       Height = 31
@@ -63,7 +62,7 @@ object MyMessageView: TMyMessageView
     end
     object ButtonNao: TButton
       AlignWithMargins = True
-      Left = 437
+      Left = 444
       Top = 4
       Width = 100
       Height = 31
@@ -78,7 +77,7 @@ object MyMessageView: TMyMessageView
     end
     object ButtonOpcao1: TButton
       AlignWithMargins = True
-      Left = 119
+      Left = 126
       Top = 4
       Width = 100
       Height = 31
@@ -93,7 +92,7 @@ object MyMessageView: TMyMessageView
     end
     object ButtonOpcao2: TButton
       AlignWithMargins = True
-      Left = 13
+      Left = 20
       Top = 4
       Width = 100
       Height = 31
@@ -108,7 +107,7 @@ object MyMessageView: TMyMessageView
     end
     object ButtonOpcao3: TButton
       AlignWithMargins = True
-      Left = -93
+      Left = -86
       Top = 4
       Width = 100
       Height = 31
@@ -126,31 +125,69 @@ object MyMessageView: TMyMessageView
     AlignWithMargins = True
     Left = 2
     Top = 2
-    Width = 537
-    Height = 194
+    Width = 544
+    Height = 192
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
     Margins.Bottom = 2
-    Align = alClient
+    Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
     StyleElements = []
+    object mmMessage: TMemo
+      Tag = 11
+      Left = 89
+      Top = 0
+      Width = 455
+      Height = 177
+      TabStop = False
+      Align = alClient
+      Alignment = taCenter
+      BevelOuter = bvNone
+      BorderStyle = bsNone
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = []
+      Lines.Strings = (
+        '01'
+        '02'
+        '03'
+        '04'
+        '05'
+        '06'
+        '07'
+        '08'
+        '09'
+        '10'
+        '11'
+        '12'
+        '')
+      ParentColor = True
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 1
+      StyleElements = []
+      ExplicitHeight = 179
+    end
     object pnImage: TPanel
       Left = 0
       Top = 0
       Width = 89
-      Height = 194
+      Height = 177
       Align = alLeft
       BevelOuter = bvNone
-      PopupMenu = PopupMenuForm
+      PopupMenu = PopupMenuCompleteMessage
       TabOrder = 0
+      ExplicitHeight = 179
       object imgAlert: TImage
         AlignWithMargins = True
         Left = 3
         Top = 63
         Width = 83
-        Height = 68
+        Height = 51
         Align = alClient
         Center = True
         Picture.Data = {
@@ -192,7 +229,7 @@ object MyMessageView: TMyMessageView
         Left = 3
         Top = 63
         Width = 83
-        Height = 68
+        Height = 51
         Align = alClient
         Center = True
         Picture.Data = {
@@ -243,7 +280,7 @@ object MyMessageView: TMyMessageView
         Left = 3
         Top = 63
         Width = 83
-        Height = 68
+        Height = 51
         Align = alClient
         Center = True
         Picture.Data = {
@@ -288,7 +325,7 @@ object MyMessageView: TMyMessageView
         Left = 3
         Top = 63
         Width = 83
-        Height = 68
+        Height = 51
         Align = alClient
         Center = True
         Picture.Data = {
@@ -310,7 +347,7 @@ object MyMessageView: TMyMessageView
         Left = 3
         Top = 63
         Width = 83
-        Height = 68
+        Height = 51
         Align = alClient
         Center = True
         Picture.Data = {
@@ -367,7 +404,7 @@ object MyMessageView: TMyMessageView
         Left = 3
         Top = 63
         Width = 83
-        Height = 68
+        Height = 51
         Align = alClient
         Center = True
         Picture.Data = {
@@ -387,7 +424,7 @@ object MyMessageView: TMyMessageView
         Left = 3
         Top = 63
         Width = 83
-        Height = 68
+        Height = 51
         Align = alClient
         Center = True
         Picture.Data = {
@@ -410,13 +447,14 @@ object MyMessageView: TMyMessageView
           91F9313FA965760000000049454E44AE426082}
         ExplicitLeft = 6
         ExplicitTop = 71
+        ExplicitHeight = 68
       end
       object imgDone: TImage
         AlignWithMargins = True
         Left = 3
         Top = 63
         Width = 83
-        Height = 68
+        Height = 51
         Align = alClient
         Center = True
         Picture.Data = {
@@ -441,6 +479,7 @@ object MyMessageView: TMyMessageView
           9303E20000000049454E44AE426082}
         ExplicitLeft = 6
         ExplicitTop = 71
+        ExplicitHeight = 68
       end
       object pnTop: TPanel
         Left = 0
@@ -455,7 +494,7 @@ object MyMessageView: TMyMessageView
       end
       object pnBotton: TPanel
         Left = 0
-        Top = 134
+        Top = 117
         Width = 89
         Height = 60
         Align = alBottom
@@ -463,17 +502,58 @@ object MyMessageView: TMyMessageView
         ParentColor = True
         TabOrder = 1
         StyleElements = []
+        ExplicitTop = 119
       end
     end
-    object mmMessage: TMemo
+    object pnlbShowCompleteMessage: TPanel
+      Left = 0
+      Top = 177
+      Width = 544
+      Height = 15
+      Align = alBottom
+      BevelOuter = bvNone
+      TabOrder = 2
+      object lbShowCompleteMessage: TLabel
+        AlignWithMargins = True
+        Left = 441
+        Top = 0
+        Width = 98
+        Height = 15
+        Cursor = crHandPoint
+        Margins.Left = 0
+        Margins.Top = 0
+        Margins.Right = 5
+        Margins.Bottom = 0
+        Align = alRight
+        Alignment = taRightJustify
+        Caption = 'XXXXXXXXXXXXXX'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = lbShowCompleteMessageClick
+        ExplicitHeight = 13
+      end
+    end
+  end
+  object pnCompleteMessage: TPanel
+    Left = 0
+    Top = 196
+    Width = 548
+    Height = 2
+    Align = alClient
+    BevelOuter = bvLowered
+    TabOrder = 2
+    object mmCompleteMessage: TMemo
       Tag = 12
-      Left = 89
-      Top = 0
-      Width = 448
-      Height = 194
+      Left = 1
+      Top = 1
+      Width = 546
+      Height = 0
       TabStop = False
       Align = alClient
-      Alignment = taCenter
       BevelOuter = bvNone
       BorderStyle = bsNone
       Font.Charset = DEFAULT_CHARSET
@@ -497,8 +577,10 @@ object MyMessageView: TMyMessageView
         '')
       ParentColor = True
       ParentFont = False
-      PopupMenu = PopupMenuForm
-      TabOrder = 1
+      PopupMenu = PopupMenuCompleteMessage
+      ReadOnly = True
+      ScrollBars = ssVertical
+      TabOrder = 0
       StyleElements = []
     end
   end
@@ -814,20 +896,10 @@ object MyMessageView: TMyMessageView
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000}
   end
-  object PopupMenuForm: TPopupMenu
+  object PopupMenuCompleteMessage: TPopupMenu
     Images = ImageListIcon
-    OnPopup = PopupMenuFormPopup
     Left = 344
     Top = 8
-    object AlternarMensagem1: TMenuItem
-      Tag = 1
-      Caption = 'Mostrar mensagem xxxxxxxx'
-      ShortCut = 116
-      OnClick = AlternarMensagem1Click
-    end
-    object N1: TMenuItem
-      Caption = '-'
-    end
     object Copiartexto1: TMenuItem
       Bitmap.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100

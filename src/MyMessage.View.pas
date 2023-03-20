@@ -26,11 +26,14 @@ uses
 const
  BUTTON_MARGEM   = 40;
  PIXEL_POR_LETRA = 5;
+ SHOW_COMPLETE_MESSAGE = 'Mostrar mais >>';
+ HIDE_COMPLETE_MESSAGE = '<< Mostrar menos';
+ HEIGHT_COMP_MESSAGE   = 150;
 
 type
   TMyMessageView = class(TForm)
     ImageListButtons: TImageList;
-    PopupMenuForm: TPopupMenu;
+    PopupMenuCompleteMessage: TPopupMenu;
     Copiartexto1: TMenuItem;
     GroupBoxBotton: TPanel;
     ButtonOk: TButton;
@@ -51,10 +54,12 @@ type
     pnTop: TPanel;
     pnBotton: TPanel;
     mmMessage: TMemo;
-    AlternarMensagem1: TMenuItem;
-    N1: TMenuItem;
     imgPrinter: TImage;
     imgDone: TImage;
+    pnCompleteMessage: TPanel;
+    mmCompleteMessage: TMemo;
+    pnlbShowCompleteMessage: TPanel;
+    lbShowCompleteMessage: TLabel;
     procedure ButtonOkClick(Sender: TObject);
     procedure ButtonSimClick(Sender: TObject);
     procedure ButtonNaoClick(Sender: TObject);
@@ -65,9 +70,9 @@ type
     procedure ButtonOpcao3Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure AlternarMensagem1Click(Sender: TObject);
-    procedure PopupMenuFormPopup(Sender: TObject);
+    procedure lbShowCompleteMessageClick(Sender: TObject);
   private
+    FOriginalHeight: Integer;
     procedure ConfForm;
     procedure LoadImage;
     procedure ConfButtons;
@@ -125,11 +130,7 @@ end;
 procedure TMyMessageView.Copiartexto1Click(Sender: TObject);
 begin
    try
-     Clipboard.AsText := FMessageContent +
-                         sLineBreak +
-                         '*********************' +
-                         sLineBreak +
-                         FCompleteMessageContent;
+     Clipboard.AsText := FCompleteMessageContent;
    except
    end;
 end;
@@ -138,6 +139,7 @@ procedure TMyMessageView.FormCreate(Sender: TObject);
 begin
    Constraints.MinWidth  := Self.Width;
    Constraints.MinHeight := Self.Height;
+   FOriginalHeight       := Self.Height;
 end;
 
 procedure TMyMessageView.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -174,12 +176,32 @@ begin
    Self.ConfForm;
 end;
 
+procedure TMyMessageView.lbShowCompleteMessageClick(Sender: TObject);
+var
+  LCaption: string;
+begin
+   mmCompleteMessage.Lines.Clear;
+   Self.Height := FOriginalHeight;
+   LCaption    := lbShowCompleteMessage.Caption;
+   lbShowCompleteMessage.Caption := SHOW_COMPLETE_MESSAGE;
+
+   if(LCaption.Equals(SHOW_COMPLETE_MESSAGE))then
+   begin
+      Self.LoadCompleteMessage;
+      lbShowCompleteMessage.Caption := HIDE_COMPLETE_MESSAGE;
+      Self.Height := Self.Height + HEIGHT_COMP_MESSAGE;
+   end;
+end;
+
 procedure TMyMessageView.ConfForm;
 begin
    pnTela.Color := clBtnFace;
    Self.ConfButtons;
    Self.LoadImage;
    Self.LoadMessage;
+   pnlbShowCompleteMessage.Visible := not FCompleteMessageContent.IsEmpty;
+   lbShowCompleteMessage.Caption := SHOW_COMPLETE_MESSAGE;
+   mmCompleteMessage.Lines.Clear;
 end;
 
 procedure TMyMessageView.ConfButtons;
@@ -224,33 +246,12 @@ end;
 
 procedure TMyMessageView.LoadMessage;
 begin
-   MyMessageView.mmMessage.TextVerticalCenter(MyMessageView.mmMessage.Tag, FMessageContent);
-   AlternarMensagem1.Caption := 'Mostrar mensagem completa';
-   AlternarMensagem1.Tag     := 1;
-end;
-
-procedure TMyMessageView.PopupMenuFormPopup(Sender: TObject);
-begin
-   AlternarMensagem1.Visible := not FCompleteMessageContent.IsEmpty;
-   AlternarMensagem1.ImageIndex := AlternarMensagem1.Tag;
+   mmMessage.TextVerticalCenter(MyMessageView.mmMessage.Tag, FMessageContent);
 end;
 
 procedure TMyMessageView.LoadCompleteMessage;
 begin
-   if(FCompleteMessageContent.IsEmpty)then
-     Exit;
-
-   MyMessageView.mmMessage.TextVerticalCenter(MyMessageView.mmMessage.Tag, FCompleteMessageContent);
-   AlternarMensagem1.Caption := 'Mostrar mensagem simples';
-   AlternarMensagem1.Tag     := 2;
-end;
-
-procedure TMyMessageView.AlternarMensagem1Click(Sender: TObject);
-begin
-   if(AlternarMensagem1.Tag = 2)then
-     Self.LoadMessage
-   else
-     Self.LoadCompleteMessage;
+   mmCompleteMessage.Lines.Add(FCompleteMessageContent);
 end;
 
 end.
